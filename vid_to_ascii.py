@@ -1,9 +1,7 @@
 import cv2
-import numpy as np
 import os
 import time
 import pickle
-import sys
 
 def convert_video_to_ascii(video_path, scale=0.1, output_file="ascii_video.pkl"):
     """
@@ -48,8 +46,8 @@ def convert_video_to_ascii(video_path, scale=0.1, output_file="ascii_video.pkl")
         gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
         
         # Normalize for better contrast
-        min_val = np.min(gray)
-        max_val = np.max(gray)
+        min_val, max_val, _, _ = cv2.minMaxLoc(gray)
+
         if max_val > min_val:
             normalized = (gray - min_val) * 255.0 / (max_val - min_val)
         else:
